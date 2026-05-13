@@ -281,13 +281,88 @@
   }
 
   /* ===== Hero ===== */
-  .hero { padding: 100px 0 80px; }
+  .hero {
+    padding: 100px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Hero Highlight: 기본 도트 패턴 (정적 배경) */
+  .hero-dots-base {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(45, 45, 45, 0.13) 1px, transparent 1px);
+    background-size: 16px 16px;
+    opacity: 0.7;
+    z-index: 0;
+  }
+  /* Hero Highlight: 마우스 따라가는 올리브 도트 (마스크로 일부만 노출) */
+  .hero-dots-hover {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, var(--color-primary) 1.2px, transparent 1.2px);
+    background-size: 16px 16px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    -webkit-mask-image: radial-gradient(
+      220px circle at var(--mx, -200px) var(--my, -200px),
+      black 0%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      220px circle at var(--mx, -200px) var(--my, -200px),
+      black 0%,
+      transparent 100%
+    );
+    z-index: 1;
+  }
+  .hero:hover .hero-dots-hover { opacity: 0.95; }
+  .hero > .container { position: relative; z-index: 2; }
+
   .hero-inner {
     display: grid;
     grid-template-columns: 1.05fr 1fr;
     gap: 4rem;
     align-items: center;
   }
+  /* Hero H1 등장 애니메이션 (framer-motion initial/animate 대체) */
+  .hero-text h1 {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroH1In 0.55s 0.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes heroH1In {
+    0%   { opacity: 0; transform: translateY(20px); }
+    60%  { opacity: 1; transform: translateY(-5px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Text Highlight: 좌→우로 차오르는 배경 (framer-motion backgroundSize 0→100% 대체) */
+  .text-highlight {
+    display: inline-block;
+    position: relative;
+    padding: 0 0.4rem;
+    border-radius: 8px;
+    color: var(--color-text);
+    background-image: linear-gradient(90deg, var(--color-primary-soft) 0%, var(--color-wheat) 100%);
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 0% 100%;
+    animation: highlightExpand 1.4s 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes highlightExpand {
+    from { background-size: 0% 100%; }
+    to   { background-size: 100% 100%; }
+  }
+
+  /* 모션 줄이기 선호 시 애니메이션 비활성화 */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-text h1 { animation: none; opacity: 1; transform: none; }
+    .text-highlight { animation: none; background-size: 100% 100%; }
+    .hero-dots-hover { display: none; }
+  }
+
   .hero-text h1 {
     font-size: 2.8rem;
     font-weight: 900;
@@ -295,7 +370,6 @@
     letter-spacing: -0.02em;
     margin-bottom: 1.5rem;
   }
-  .hero-text h1 .accent { color: var(--color-primary); }
   .hero-text .lead {
     font-size: 1.05rem;
     color: var(--color-text-soft);
@@ -1048,11 +1122,14 @@
 
 <!-- ===== Hero ===== -->
 <section class="hero">
+  <!-- Hero Highlight 효과: 정적 도트 + 마우스 따라가는 올리브 도트 (장식, 스크린리더 무시) -->
+  <div class="hero-dots-base" aria-hidden="true"></div>
+  <div class="hero-dots-hover" aria-hidden="true"></div>
   <div class="container">
     <div class="hero-inner">
       <div class="hero-text">
         <div class="eyebrow primary">FUNCTIONAL CLEAN TREATS</div>
-        <h1>맛있게 건강한,<br><span class="accent">한입의 새로운 카테고리</span></h1>
+        <h1>맛있게 건강한,<br><span class="text-highlight">한입의 새로운 카테고리</span></h1>
         <p class="lead">
           <strong>맛있는 간식은 건강에 별로이고, 건강한 영양제는 맛이 없다.</strong><br>
           그 두 카테고리 사이의 공백 — 그게 한입(HANIP)이 서는 자리입니다.
@@ -1483,6 +1560,30 @@
 
     menu.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () { setOpen(false); });
+    });
+  })();
+
+  // 히어로 마우스 추적 (HeroHighlight 효과 — framer-motion useMotionValue 대체)
+  (function () {
+    var hero = document.querySelector('.hero');
+    if (!hero) return;
+    // 마우스 미세동작 과다 호출 방지: rAF 스로틀
+    var pending = false;
+    var pendingEvent = null;
+    function flush() {
+      pending = false;
+      if (!pendingEvent) return;
+      var rect = hero.getBoundingClientRect();
+      hero.style.setProperty('--mx', (pendingEvent.clientX - rect.left) + 'px');
+      hero.style.setProperty('--my', (pendingEvent.clientY - rect.top) + 'px');
+      pendingEvent = null;
+    }
+    hero.addEventListener('mousemove', function (e) {
+      pendingEvent = e;
+      if (!pending) {
+        pending = true;
+        requestAnimationFrame(flush);
+      }
     });
   })();
 

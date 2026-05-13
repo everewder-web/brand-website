@@ -785,6 +785,234 @@
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
     .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
   }
+
+  /* ===== Inquiry Modal ===== */
+  .floating-cta {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--color-primary);
+    color: white;
+    padding: 0.95rem 1.4rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 8px 24px rgba(107, 122, 58, 0.35);
+    z-index: 90;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .floating-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(107, 122, 58, 0.45);
+  }
+  .floating-cta:focus-visible {
+    outline: 3px solid var(--color-primary-soft);
+    outline-offset: 3px;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(45, 45, 45, 0.55);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--color-surface);
+    border-radius: 12px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  }
+  .modal-header {
+    padding: 1.5rem 1.5rem 0.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .modal-header h2 {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 0.3rem;
+  }
+  .modal-header p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-text);
+    font-family: inherit;
+  }
+  .modal-close:hover { background: var(--color-surface-2); }
+  .modal-close:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .inquiry-form { padding: 1rem 1.5rem 1.5rem; }
+  .form-field { margin-bottom: 1rem; }
+  .form-field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .form-field label .required {
+    color: var(--color-danger);
+    margin-left: 0.15rem;
+  }
+  .form-field label .optional {
+    color: var(--color-text-muted);
+    font-weight: 400;
+    margin-left: 0.3rem;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-field input::placeholder,
+  .form-field textarea::placeholder {
+    color: var(--color-text-muted);
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(107, 122, 58, 0.15);
+  }
+  .form-field textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .form-field .error-msg {
+    color: var(--color-danger);
+    font-size: 0.78rem;
+    margin-top: 0.35rem;
+    display: none;
+  }
+  .form-field.has-error input,
+  .form-field.has-error select,
+  .form-field.has-error textarea {
+    border-color: var(--color-danger);
+  }
+  .form-field.has-error .error-msg { display: block; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--color-primary);
+    color: white;
+    padding: 0.9rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 0.4rem;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .form-submit:hover { background: var(--color-primary-hover); }
+  .form-submit:focus-visible {
+    outline: 3px solid var(--color-primary-soft);
+    outline-offset: 2px;
+  }
+
+  /* Success state */
+  .modal-success {
+    padding: 2.8rem 1.5rem 2.4rem;
+    text-align: center;
+    display: none;
+  }
+  .modal-success.show { display: block; }
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1.3rem;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 900;
+  }
+  .modal-success h3 {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 0.6rem;
+  }
+  .modal-success p {
+    color: var(--color-text-soft);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  .success-close {
+    background: var(--color-text);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .success-close:hover { background: #444; }
+  .success-close:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .floating-cta {
+      bottom: 16px;
+      right: 16px;
+      padding: 0.85rem 1.1rem;
+      font-size: 0.88rem;
+    }
+    .modal-header h2 { font-size: 1.15rem; }
+  }
 </style>
 </head>
 <body>
@@ -1151,7 +1379,7 @@
         <ul>
           <li>1588-0000</li>
           <li>평일 09:00 - 18:00</li>
-          <li>1:1 문의하기</li>
+          <li class="footer-inquiry" data-inquiry-trigger>1:1 문의하기</li>
           <li>자주 묻는 질문</li>
         </ul>
       </div>
@@ -1171,6 +1399,68 @@
     </div>
   </div>
 </footer>
+
+<!-- ===== Floating Inquiry CTA ===== -->
+<button class="floating-cta" id="openInquiry" data-inquiry-trigger aria-label="1:1 문의하기 열기">
+  <span aria-hidden="true">💬</span>
+  <span>1:1 문의하기</span>
+</button>
+
+<!-- ===== Inquiry Modal ===== -->
+<div class="modal-overlay" id="inquiryModal" role="dialog" aria-modal="true" aria-labelledby="inquiryTitle" aria-hidden="true">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2 id="inquiryTitle">1:1 문의하기</h2>
+        <p>궁금한 점을 남겨주시면 영업일 1일 내 답변드릴게요</p>
+      </div>
+      <button type="button" class="modal-close" id="closeInquiry" aria-label="문의 창 닫기">✕</button>
+    </div>
+
+    <form class="inquiry-form" id="inquiryForm" novalidate>
+      <div class="form-field">
+        <label for="iqName">이름<span class="required">*</span></label>
+        <input type="text" id="iqName" name="name" required autocomplete="name" aria-describedby="iqNameError">
+        <div class="error-msg" id="iqNameError">이름을 입력해주세요</div>
+      </div>
+      <div class="form-field">
+        <label for="iqEmail">연락 받을 이메일<span class="required">*</span></label>
+        <input type="email" id="iqEmail" name="email" required autocomplete="email" aria-describedby="iqEmailError" placeholder="example@email.com">
+        <div class="error-msg" id="iqEmailError">올바른 이메일 형식을 입력해주세요</div>
+      </div>
+      <div class="form-field">
+        <label for="iqPet">반려동물 정보 <span class="optional">(선택)</span></label>
+        <input type="text" id="iqPet" name="pet" placeholder="예) 골든리트리버 3살, 알러지 있음">
+      </div>
+      <div class="form-field">
+        <label for="iqCategory">관심 케어 <span class="optional">(선택)</span></label>
+        <select id="iqCategory" name="category">
+          <option value="">선택 안 함</option>
+          <option value="immune">면역 케어</option>
+          <option value="joint">관절 케어</option>
+          <option value="skin">피부·털 케어</option>
+          <option value="dental">덴탈 케어</option>
+          <option value="digest">소화 케어</option>
+          <option value="weight">체중 케어</option>
+          <option value="other">기타</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="iqMessage">문의 내용<span class="required">*</span></label>
+        <textarea id="iqMessage" name="message" required aria-describedby="iqMessageError" placeholder="문의하실 내용을 자유롭게 작성해주세요"></textarea>
+        <div class="error-msg" id="iqMessageError">문의 내용을 입력해주세요</div>
+      </div>
+      <button type="submit" class="form-submit">문의 보내기</button>
+    </form>
+
+    <div class="modal-success" id="inquirySuccess" aria-live="polite">
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <h3>문의가 접수되었습니다</h3>
+      <p>영업일 1일 내 입력하신 이메일로<br>답변드릴게요.</p>
+      <button type="button" class="success-close" id="closeSuccess">확인</button>
+    </div>
+  </div>
+</div>
 
 <script>
   // 모바일 햄버거 메뉴 토글
@@ -1193,6 +1483,123 @@
 
     menu.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () { setOpen(false); });
+    });
+  })();
+
+  // 1:1 문의 모달 + 폼 검증
+  (function () {
+    var modal = document.getElementById('inquiryModal');
+    var form = document.getElementById('inquiryForm');
+    var success = document.getElementById('inquirySuccess');
+    var closeBtn = document.getElementById('closeInquiry');
+    var closeSuccessBtn = document.getElementById('closeSuccess');
+    var triggers = document.querySelectorAll('[data-inquiry-trigger]');
+    if (!modal || !form || triggers.length === 0) return;
+
+    var lastFocused = null;
+
+    function openModal(trigger) {
+      lastFocused = trigger || document.activeElement;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      // form 초기 상태로 (이전 성공 화면 잔여 제거)
+      form.style.display = '';
+      success.classList.remove('show');
+      setTimeout(function () {
+        var first = form.querySelector('input, textarea');
+        if (first) first.focus();
+      }, 50);
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      form.querySelectorAll('.form-field').forEach(function (f) { f.classList.remove('has-error'); });
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+    }
+
+    triggers.forEach(function (btn) {
+      btn.addEventListener('click', function () { openModal(btn); });
+      // li 같은 비버튼 요소도 키보드 접근 가능하게
+      if (btn.tagName === 'LI') {
+        btn.setAttribute('role', 'button');
+        btn.setAttribute('tabindex', '0');
+        btn.style.cursor = 'pointer';
+        btn.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModal(btn);
+          }
+        });
+      }
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+
+    closeSuccessBtn.addEventListener('click', function () {
+      closeModal();
+      form.reset();
+    });
+
+    // 배경 클릭으로 닫기
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+
+    // ESC 키로 닫기
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    // 폼 제출 시 검증 + 성공 화면 전환 (백엔드 없음)
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var fields = [
+        { id: 'iqName', validate: function (v) { return v.trim().length > 0; } },
+        { id: 'iqEmail', validate: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); } },
+        { id: 'iqMessage', validate: function (v) { return v.trim().length > 0; } }
+      ];
+
+      var valid = true;
+      var firstInvalid = null;
+
+      fields.forEach(function (f) {
+        var el = document.getElementById(f.id);
+        var fieldWrap = el.closest('.form-field');
+        if (!f.validate(el.value)) {
+          fieldWrap.classList.add('has-error');
+          valid = false;
+          if (!firstInvalid) firstInvalid = el;
+        } else {
+          fieldWrap.classList.remove('has-error');
+        }
+      });
+
+      if (!valid) {
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+
+      // 성공 — 폼을 성공 화면으로 교체 (백엔드 호출 없음)
+      form.style.display = 'none';
+      success.classList.add('show');
+      // 성공 메시지로 포커스 이동 → 스크린리더 알림
+      closeSuccessBtn.focus();
+    });
+
+    // 실시간 에러 해제 — 사용자가 다시 입력하면 에러 표시 제거
+    form.querySelectorAll('input, textarea').forEach(function (el) {
+      el.addEventListener('input', function () {
+        var fieldWrap = el.closest('.form-field');
+        if (fieldWrap && fieldWrap.classList.contains('has-error')) {
+          fieldWrap.classList.remove('has-error');
+        }
+      });
     });
   })();
 </script>

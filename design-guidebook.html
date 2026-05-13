@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PETHROOM Design Guidebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Base */
+    --color-bg: #FFFFFF;
+    --color-surface: #F7F5F2;
+    --color-surface-2: #F2F0EC;
+    --color-text: #1A1A1A;
+    --color-text-muted: #888888;
+    --color-border: #E5E5E5;
+
+    /* Accent */
+    --color-primary: #E87A2C;
+    --color-accent-gold: #C9A35B;
+    --color-success: #3DA858;
+    --color-danger: #FF3B30;
+
+    /* Typography */
+    --font-sans: 'Noto Sans KR', system-ui, sans-serif;
+    --font-en: 'Inter', 'Helvetica Neue', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* ===== Layout ===== */
+  .doc {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  aside {
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    padding: 2.5rem 1.5rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  aside .brand {
+    font-family: var(--font-en);
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+  aside .brand-sub {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  aside nav { display: flex; flex-direction: column; gap: 0.2rem; }
+  aside nav a {
+    color: var(--color-text);
+    text-decoration: none;
+    padding: 0.5rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: background 0.15s;
+  }
+  aside nav a:hover { background: white; }
+  aside nav .num {
+    color: var(--color-text-muted);
+    font-family: var(--font-en);
+    margin-right: 0.5rem;
+  }
+
+  /* Main */
+  main {
+    padding: 4rem 5rem;
+    max-width: 1100px;
+  }
+
+  /* ===== Cover ===== */
+  .cover {
+    margin-bottom: 5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .cover .eyebrow {
+    font-family: var(--font-en);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  .cover h1 {
+    font-family: var(--font-en);
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .cover .sub {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  .cover .meta {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  .cover .meta strong {
+    color: var(--color-text);
+    display: block;
+    font-weight: 700;
+    font-family: var(--font-en);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.7rem;
+    margin-bottom: 0.3rem;
+  }
+
+  /* ===== Section ===== */
+  section {
+    margin-bottom: 5rem;
+    scroll-margin-top: 2rem;
+  }
+  section .section-num {
+    font-family: var(--font-en);
+    font-weight: 700;
+    color: var(--color-primary);
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+  section h2 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  section .section-sub {
+    color: var(--color-text-muted);
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+  }
+  section h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+  section h3:first-of-type { border-top: none; padding-top: 0; }
+
+  /* ===== Color Swatches ===== */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  .swatch {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+  .swatch-color {
+    aspect-ratio: 1.6;
+    display: flex;
+    align-items: flex-end;
+    padding: 0.8rem;
+    color: white;
+    font-family: var(--font-en);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .swatch-color.light { color: var(--color-text); }
+  .swatch-info {
+    padding: 0.8rem;
+    background: white;
+  }
+  .swatch-info .name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+  }
+  .swatch-info .role {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ===== Typography Sample ===== */
+  .type-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 200px;
+    gap: 1.5rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--color-border);
+    align-items: baseline;
+  }
+  .type-row .label {
+    font-family: var(--font-en);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    font-weight: 700;
+  }
+  .type-row .specs {
+    font-family: var(--font-en);
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    text-align: right;
+  }
+  .t-display { font-size: 40px; font-weight: 900; line-height: 1.1; }
+  .t-h1 { font-size: 30px; font-weight: 700; line-height: 1.2; }
+  .t-h2 { font-size: 24px; font-weight: 700; line-height: 1.3; }
+  .t-h3 { font-size: 18px; font-weight: 600; line-height: 1.4; }
+  .t-body { font-size: 15px; font-weight: 400; }
+  .t-caption { font-size: 13px; font-weight: 400; color: var(--color-text-muted); }
+
+  /* ===== Spacing Scale ===== */
+  .spacing-row {
+    display: grid;
+    grid-template-columns: 80px 120px 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.9rem;
+  }
+  .spacing-row .token {
+    font-family: var(--font-en);
+    font-weight: 700;
+  }
+  .spacing-row .px {
+    font-family: var(--font-en);
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+  .spacing-bar {
+    background: var(--color-primary);
+    height: 12px;
+    border-radius: 2px;
+  }
+
+  /* ===== Component Preview ===== */
+  .preview {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .preview-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.6rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: var(--color-text); color: white; }
+  .btn-secondary { background: white; color: var(--color-text); border: 1px solid var(--color-text); }
+  .btn-accent { background: var(--color-primary); color: white; }
+  .btn-arrow::after { content: '→'; font-family: var(--font-en); }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.05em;
+    font-family: var(--font-en);
+  }
+  .badge-best { background: var(--color-primary); }
+  .badge-new { background: var(--color-success); }
+  .badge-discount { background: var(--color-danger); }
+  .badge-vip {
+    background: var(--color-accent-gold);
+    color: white;
+  }
+
+  /* Product Card */
+  .product-card {
+    width: 220px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .product-thumb {
+    aspect-ratio: 1;
+    background: var(--color-surface-2);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+  }
+  .product-thumb .badge {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.7rem;
+  }
+  .product-meta { padding: 0.9rem 0.5rem; }
+  .product-cat {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+    font-family: var(--font-en);
+    letter-spacing: 0.05em;
+  }
+  .product-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+  .product-desc {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.8rem;
+  }
+  .price-list { font-size: 0.85rem; }
+  .price-original { color: var(--color-text-muted); text-decoration: line-through; }
+  .price-sale { color: var(--color-text); font-weight: 900; font-size: 1.1rem; margin: 0.1rem 0; }
+  .price-vip { color: var(--color-primary); font-weight: 700; font-size: 0.85rem; }
+  .price-vip::before {
+    content: 'VIP';
+    background: var(--color-accent-gold);
+    color: white;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.65rem;
+    border-radius: 2px;
+    margin-right: 0.4rem;
+    font-family: var(--font-en);
+  }
+
+  /* Section Header sample */
+  .sec-header-sample {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  .sec-header-sample .eyebrow {
+    font-family: var(--font-en);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+  .sec-header-sample h4 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 0.6rem;
+  }
+  .sec-header-sample p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  /* Numbered list sample */
+  .numbered-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .numbered-item .num {
+    font-family: var(--font-en);
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--color-primary);
+    line-height: 1;
+    margin-bottom: 0.7rem;
+  }
+  .numbered-item h5 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .numbered-item p { font-size: 0.82rem; color: var(--color-text-muted); }
+
+  /* Review card sample */
+  .review-card-sample {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    max-width: 320px;
+    border: 1px solid var(--color-border);
+  }
+  .review-card-sample .stars { color: var(--color-primary); margin-bottom: 0.6rem; }
+  .review-card-sample .body { font-size: 0.9rem; margin-bottom: 0.8rem; }
+  .review-card-sample .author { font-size: 0.8rem; color: var(--color-text-muted); }
+
+  /* Page structure table */
+  .structure-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .structure-table th, .structure-table td {
+    padding: 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .structure-table th {
+    background: var(--color-surface);
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+  .structure-table .order {
+    font-family: var(--font-en);
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+  .structure-table .name { font-weight: 700; }
+
+  /* Voice & tone */
+  .voice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .voice-card {
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+  }
+  .voice-card.do { border-left: 4px solid var(--color-success); }
+  .voice-card.dont { border-left: 4px solid var(--color-danger); }
+  .voice-card .label {
+    font-family: var(--font-en);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.7rem;
+  }
+  .voice-card.do .label { color: var(--color-success); }
+  .voice-card.dont .label { color: var(--color-danger); }
+  .voice-card ul { padding-left: 1.1rem; font-size: 0.9rem; }
+  .voice-card li { margin-bottom: 0.4rem; }
+
+  /* Code */
+  pre {
+    background: var(--color-text);
+    color: #E8E8E8;
+    padding: 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    font-family: 'SF Mono', Monaco, monospace;
+    line-height: 1.6;
+  }
+  pre .comment { color: #888; }
+  pre .var { color: #FFB088; }
+  pre .val { color: #B5E6D0; }
+
+  @media (max-width: 900px) {
+    .doc { grid-template-columns: 1fr; }
+    aside { position: static; height: auto; }
+    main { padding: 2rem 1.5rem; }
+    .cover h1 { font-size: 2.5rem; }
+    .numbered-grid { grid-template-columns: 1fr 1fr; }
+    .voice-grid { grid-template-columns: 1fr; }
+    .type-row { grid-template-columns: 1fr; gap: 0.4rem; }
+    .type-row .specs { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <!-- ===== Sidebar ===== -->
+  <aside>
+    <div class="brand">PETHROOM</div>
+    <div class="brand-sub">Design Guidebook v1.0</div>
+    <nav>
+      <a href="#cover"><span class="num">00</span>Overview</a>
+      <a href="#audience"><span class="num">0A</span>Audience & Language</a>
+      <a href="#color"><span class="num">01</span>Color</a>
+      <a href="#typography"><span class="num">02</span>Typography</a>
+      <a href="#layout"><span class="num">03</span>Layout & Spacing</a>
+      <a href="#structure"><span class="num">04</span>Page Structure</a>
+      <a href="#components"><span class="num">05</span>Components</a>
+      <a href="#voice"><span class="num">06</span>Voice & Tone</a>
+      <a href="#tokens"><span class="num">07</span>Design Tokens</a>
+    </nav>
+  </aside>
+
+  <!-- ===== Main ===== -->
+  <main>
+
+    <!-- Cover -->
+    <div class="cover" id="cover">
+      <div class="eyebrow">DESIGN GUIDEBOOK</div>
+      <h1>PETHROOM<br>DESIGN SYSTEM</h1>
+      <p class="sub">프리미엄 반려동물 브랜드를 위한 디자인 가이드</p>
+      <div class="meta">
+        <div><strong>Version</strong>1.0</div>
+        <div><strong>Source</strong>pethroom.com</div>
+        <div><strong>Date</strong>2026.05.13</div>
+        <div><strong>Author</strong>justinl@</div>
+      </div>
+    </div>
+
+    <!-- 0A Audience & Language -->
+    <section id="audience">
+      <div class="section-num">0A / AUDIENCE & LANGUAGE</div>
+      <h2>타겟 고객 & 한글 우선 원칙</h2>
+      <p class="section-sub">모든 디자인 결정은 이 페르소나와 언어 원칙을 우선합니다.</p>
+
+      <h3>Primary Persona</h3>
+      <div class="preview">
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+          <div>
+            <div style="font-family: var(--font-en); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--color-text-muted); font-weight: 700; margin-bottom: 0.4rem;">국적</div>
+            <div style="font-weight: 700; font-size: 1.1rem;">한국인</div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-en); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--color-text-muted); font-weight: 700; margin-bottom: 0.4rem;">연령</div>
+            <div style="font-weight: 700; font-size: 1.1rem;">20-30대</div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-en); font-size: 0.72rem; letter-spacing: 0.1em; color: var(--color-text-muted); font-weight: 700; margin-bottom: 0.4rem;">상황</div>
+            <div style="font-weight: 700; font-size: 1.1rem;">반려동물 보호자</div>
+          </div>
+        </div>
+        <p style="margin-top: 1.2rem; color: var(--color-text-muted); font-size: 0.9rem;">프리미엄한 인상을 선호하지만, 모국어로 빠르게 정보를 파악하고 싶어함. 영문 트렌디함도 즐기지만 행동(쇼핑/가입/문의)에는 망설임이 없어야 함.</p>
+      </div>
+
+      <h3>한글 우선 원칙 (Korean-First)</h3>
+      <p style="margin-bottom: 1.5rem; font-weight: 700; font-size: 1.05rem;">"사용자가 누르거나 이동하는 모든 요소는 한글로."</p>
+
+      <h4 style="font-size: 0.95rem; font-weight: 700; margin: 1rem 0 0.6rem; color: var(--color-success);">✓ 반드시 한글 (Required)</h4>
+      <table class="structure-table">
+        <thead><tr><th style="width:200px">영역</th><th>예시</th></tr></thead>
+        <tbody>
+          <tr><td class="name">글로벌 네비게이션</td><td><strong>쇼핑 · 멤버십 · 브랜드 · 신상품</strong> <span style="color: var(--color-text-muted);">(❌ SHOP/VIP/BRAND/NEW)</span></td></tr>
+          <tr><td class="name">CTA 버튼</td><td><strong>쇼핑 시작하기 · 장바구니에 담기 · 가입하기</strong></td></tr>
+          <tr><td class="name">아이콘 툴팁</td><td><strong>검색 · 마이페이지 · 장바구니</strong></td></tr>
+          <tr><td class="name">상품 카테고리</td><td><strong>강아지 · 사료</strong> <span style="color: var(--color-text-muted);">(❌ DOG · FOOD)</span></td></tr>
+          <tr><td class="name">푸터 컬럼 헤더</td><td><strong>쇼핑 · 고객지원 · 회사</strong></td></tr>
+          <tr><td class="name">시스템 메시지/폼</td><td><strong>이메일을 입력해주세요</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h4 style="font-size: 0.95rem; font-weight: 700; margin: 1.5rem 0 0.6rem; color: var(--color-accent-gold);">△ 영문 허용 (Decorative Only)</h4>
+      <table class="structure-table">
+        <thead><tr><th style="width:200px">영역</th><th>예시</th></tr></thead>
+        <tbody>
+          <tr><td class="name">브랜드 로고</td><td><strong>POPOMARKET</strong> + 한글 부제 <strong>포포마켓</strong> 병기</td></tr>
+          <tr><td class="name">섹션 Eyebrow</td><td><strong>BEST SELLER</strong> (반드시 바로 아래 한글 헤딩 페어)</td></tr>
+          <tr><td class="name">편집 라벨</td><td><strong>VOL. 01 · SPRING 2026</strong></td></tr>
+          <tr><td class="name">장식 카피</td><td>VIP 카드의 <strong>EXCLUSIVE</strong> 같은 그래픽 요소</td></tr>
+        </tbody>
+      </table>
+
+      <h4 style="font-size: 0.95rem; font-weight: 700; margin: 1.5rem 0 0.6rem; color: var(--color-danger);">✗ 영문 금지 (Forbidden)</h4>
+      <ul style="padding-left: 1.2rem; font-size: 0.95rem; color: var(--color-text-soft);">
+        <li style="margin-bottom: 0.3rem;">단독으로 등장하는 메뉴/버튼</li>
+        <li style="margin-bottom: 0.3rem;">한글 페어 없는 카테고리/안내</li>
+        <li style="margin-bottom: 0.3rem;">의미 추정이 필요한 단어 (CHECKOUT, SUBSCRIBE 등)</li>
+      </ul>
+
+      <h3>영문-한글 페어 패턴</h3>
+      <div class="preview">
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-en); font-size: 0.78rem; letter-spacing: 0.15em; color: var(--color-primary); font-weight: 700; margin-bottom: 0.6rem;">BEST SELLER</div>
+          <div style="font-size: 1.6rem; font-weight: 900;">이번 주 인기 상품</div>
+          <p style="margin-top: 0.7rem; color: var(--color-text-muted); font-size: 0.85rem;">↑ 영문 eyebrow는 디자인적 강조<br>↑ 한글 헤딩이 실제 정보 전달</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 Color -->
+    <section id="color">
+      <div class="section-num">01 / COLOR</div>
+      <h2>색상 시스템</h2>
+      <p class="section-sub">흰 배경 + 검정 텍스트가 기본. 오렌지 1포인트로 강조를 절제하여 프리미엄한 인상을 만들어냅니다.</p>
+
+      <h3>Base Colors</h3>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color light" style="background: #FFFFFF; border-bottom: 1px solid var(--color-border);">#FFFFFF</div>
+          <div class="swatch-info"><div class="name">Background</div><div class="role">페이지 기본 배경</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color light" style="background: #F7F5F2;">#F7F5F2</div>
+          <div class="swatch-info"><div class="name">Surface</div><div class="role">섹션 구분, 카드 배경</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color light" style="background: #E5E5E5;">#E5E5E5</div>
+          <div class="swatch-info"><div class="name">Border</div><div class="role">구분선, 카드 경계</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color light" style="background: #888888; color: white;">#888888</div>
+          <div class="swatch-info"><div class="name">Text Muted</div><div class="role">메타 정보, 캡션</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #1A1A1A;">#1A1A1A</div>
+          <div class="swatch-info"><div class="name">Text Primary</div><div class="role">본문, 헤딩</div></div>
+        </div>
+      </div>
+
+      <h3>Accent Colors</h3>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background: #E87A2C;">#E87A2C</div>
+          <div class="swatch-info"><div class="name">Brand Primary</div><div class="role">CTA, 강조 텍스트</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #C9A35B;">#C9A35B</div>
+          <div class="swatch-info"><div class="name">VIP Gold</div><div class="role">VIP 혜택 라벨</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #FF3B30;">#FF3B30</div>
+          <div class="swatch-info"><div class="name">Discount Red</div><div class="role">할인율 표시</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background: #3DA858;">#3DA858</div>
+          <div class="swatch-info"><div class="name">Success Green</div><div class="role">NEW 배지</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 Typography -->
+    <section id="typography">
+      <div class="section-num">02 / TYPOGRAPHY</div>
+      <h2>타이포그래피</h2>
+      <p class="section-sub">한글은 Noto Sans KR, 영문은 Inter. 영문 대문자 헤딩과 한글 부제목 페어가 시그니처 패턴입니다.</p>
+
+      <h3>Type Scale</h3>
+      <div class="type-row">
+        <div class="label">Display</div>
+        <div class="t-display">THE REASON WE EXIST</div>
+        <div class="specs">40px / 900 / 1.1</div>
+      </div>
+      <div class="type-row">
+        <div class="label">H1</div>
+        <div class="t-h1">우리 아이를 위한 진심</div>
+        <div class="specs">30px / 700 / 1.2</div>
+      </div>
+      <div class="type-row">
+        <div class="label">H2</div>
+        <div class="t-h2">이번 주 베스트 상품</div>
+        <div class="specs">24px / 700 / 1.3</div>
+      </div>
+      <div class="type-row">
+        <div class="label">H3</div>
+        <div class="t-h3">프리미엄 연어 사료 2kg</div>
+        <div class="specs">18px / 600 / 1.4</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Body</div>
+        <div class="t-body">까다롭게 고른 프리미엄 사료부터 매일 쓰는 생활용품까지, 반려동물과 보호자 모두를 위한 진심 어린 선택입니다.</div>
+        <div class="specs">15px / 400 / 1.6</div>
+      </div>
+      <div class="type-row">
+        <div class="label">Caption</div>
+        <div class="t-caption">VIP 35% 추가할인 적용가</div>
+        <div class="specs">13px / 400 / muted</div>
+      </div>
+    </section>
+
+    <!-- 03 Layout -->
+    <section id="layout">
+      <div class="section-num">03 / LAYOUT & SPACING</div>
+      <h2>레이아웃 & 간격</h2>
+      <p class="section-sub">1280px 컨테이너, 4-8-16-24-40-80px 8픽셀 베이스 스케일.</p>
+
+      <h3>Container</h3>
+      <div class="preview" style="text-align: center; font-family: var(--font-en); font-size: 0.85rem;">
+        <div style="background: white; padding: 1rem; border-radius: 4px;">Max Width: <strong>1280px</strong> &nbsp;·&nbsp; Padding: <strong>40px (desktop) / 16px (mobile)</strong></div>
+      </div>
+
+      <h3>Spacing Scale</h3>
+      <div>
+        <div class="spacing-row"><span class="token">xs</span><span class="px">4px</span><div class="spacing-bar" style="width: 4px;"></div></div>
+        <div class="spacing-row"><span class="token">sm</span><span class="px">8px</span><div class="spacing-bar" style="width: 8px;"></div></div>
+        <div class="spacing-row"><span class="token">md</span><span class="px">16px</span><div class="spacing-bar" style="width: 16px;"></div></div>
+        <div class="spacing-row"><span class="token">lg</span><span class="px">24px</span><div class="spacing-bar" style="width: 24px;"></div></div>
+        <div class="spacing-row"><span class="token">xl</span><span class="px">40px</span><div class="spacing-bar" style="width: 40px;"></div></div>
+        <div class="spacing-row"><span class="token">2xl</span><span class="px">80px</span><div class="spacing-bar" style="width: 80px;"></div></div>
+      </div>
+
+      <h3>Grid Columns</h3>
+      <table class="structure-table">
+        <thead><tr><th>Breakpoint</th><th>Product Grid</th><th>Container</th></tr></thead>
+        <tbody>
+          <tr><td>Desktop (≥1024px)</td><td>4 columns</td><td>1280px / 40px padding</td></tr>
+          <tr><td>Tablet (≥768px)</td><td>3 columns</td><td>fluid / 24px padding</td></tr>
+          <tr><td>Mobile (&lt;768px)</td><td>2 columns</td><td>fluid / 16px padding</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 04 Structure -->
+    <section id="structure">
+      <div class="section-num">04 / PAGE STRUCTURE</div>
+      <h2>페이지 구성</h2>
+      <p class="section-sub">인지 → 신뢰 → 증거 → 혜택 → 상품 → 부가 서비스 → 커뮤니티로 흐르는 깔때기 구조.</p>
+
+      <table class="structure-table">
+        <thead>
+          <tr><th style="width:60px">#</th><th>섹션</th><th>역할</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="order">01</td><td class="name">Header / GNB</td><td>로고, 카테고리, 검색, 마이/장바구니</td></tr>
+          <tr><td class="order">02</td><td class="name">Promotion Banner</td><td>슬라이드 또는 스택형 이벤트 배너</td></tr>
+          <tr><td class="order">03</td><td class="name">Brand Mission</td><td>"THE REASON WE EXIST" + 어워드</td></tr>
+          <tr><td class="order">04</td><td class="name">VIP Membership</td><td>정기배송 가입 유도</td></tr>
+          <tr><td class="order">05</td><td class="name">VIP Reviews</td><td>캐러셀 사회적 증거</td></tr>
+          <tr><td class="order">06</td><td class="name">VIP Benefits 8</td><td>01-08 넘버링 그리드</td></tr>
+          <tr><td class="order">07</td><td class="name">Best Seller</td><td>인기 상품 4×n 그리드</td></tr>
+          <tr><td class="order">08</td><td class="name">New Arrival</td><td>신상품 4×n 그리드</td></tr>
+          <tr><td class="order">09</td><td class="name">Curation</td><td>큐레이션 상품 (8개)</td></tr>
+          <tr><td class="order">10</td><td class="name">App Promotion</td><td>모바일 앱 다운로드 CTA</td></tr>
+          <tr><td class="order">11</td><td class="name">IoT / Care</td><td>헬스케어 디바이스 안내</td></tr>
+          <tr><td class="order">12</td><td class="name">CSR / 기부</td><td>사회공헌 활동</td></tr>
+          <tr><td class="order">13</td><td class="name">Community Story</td><td>블로그/매거진 카드</td></tr>
+          <tr><td class="order">14</td><td class="name">Footer</td><td>사업자정보, SNS, CS</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 05 Components -->
+    <section id="components">
+      <div class="section-num">05 / COMPONENTS</div>
+      <h2>컴포넌트 라이브러리</h2>
+      <p class="section-sub">반복적으로 등장하는 UI 패턴 모음.</p>
+
+      <h3>Buttons</h3>
+      <div class="preview">
+        <div class="preview-row">
+          <button class="btn btn-primary btn-arrow">구매하기</button>
+          <button class="btn btn-secondary btn-arrow">자세히 보기</button>
+          <button class="btn btn-accent btn-arrow">VIP 가입하기</button>
+        </div>
+      </div>
+
+      <h3>Badges</h3>
+      <div class="preview">
+        <div class="preview-row">
+          <span class="badge badge-best">BEST</span>
+          <span class="badge badge-new">NEW</span>
+          <span class="badge badge-discount">-30%</span>
+          <span class="badge badge-vip">VIP</span>
+        </div>
+      </div>
+
+      <h3>Section Header</h3>
+      <div class="preview">
+        <div class="sec-header-sample">
+          <div class="eyebrow">BEST SELLER</div>
+          <h4>이번 주 인기 상품</h4>
+          <p>VIP 고객이 가장 많이 선택한 베스트셀러</p>
+        </div>
+      </div>
+
+      <h3>Product Card</h3>
+      <div class="preview">
+        <div class="preview-row">
+          <div class="product-card">
+            <div class="product-thumb">
+              <span class="badge badge-best">BEST</span>
+              🍖
+            </div>
+            <div class="product-meta">
+              <div class="product-cat">DOG · FOOD</div>
+              <div class="product-name">프리미엄 연어 사료 2kg</div>
+              <div class="product-desc">자연 방목 연어 함유 80%</div>
+              <div class="price-list">
+                <div class="price-original">38,000원</div>
+                <div class="price-sale">29,800원</div>
+                <div class="price-vip">19,800원</div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-thumb">
+              <span class="badge badge-new">NEW</span>
+              🦴
+            </div>
+            <div class="product-meta">
+              <div class="product-cat">DOG · DENTAL</div>
+              <div class="product-name">치석 케어 덴탈껌 30개입</div>
+              <div class="product-desc">매일 5분, 치아 건강 관리</div>
+              <div class="price-list">
+                <div class="price-sale">18,900원</div>
+                <div class="price-vip">12,300원</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Numbered Benefits</h3>
+      <div class="preview">
+        <div class="numbered-grid">
+          <div class="numbered-item">
+            <div class="num">01</div>
+            <h5>정기배송 35% 할인</h5>
+            <p>매월 자동으로 더 저렴하게</p>
+          </div>
+          <div class="numbered-item">
+            <div class="num">02</div>
+            <h5>무료배송</h5>
+            <p>금액 상관없이 언제나 무료</p>
+          </div>
+          <div class="numbered-item">
+            <div class="num">03</div>
+            <h5>전용 상담</h5>
+            <p>VIP만의 1:1 컨시어지</p>
+          </div>
+          <div class="numbered-item">
+            <div class="num">04</div>
+            <h5>건강검진권</h5>
+            <p>제휴 동물병원 무료 검진</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Review Card</h3>
+      <div class="preview">
+        <div class="review-card-sample">
+          <div class="stars">★★★★★</div>
+          <p class="body">"사료 바꾸고 나서 털 윤기가 확 살아났어요. 우리 콩이가 너무 잘 먹습니다."</p>
+          <div class="author">김민지 님 · 포메라니안 콩이 (3세)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 Voice & Tone -->
+    <section id="voice">
+      <div class="section-num">06 / VOICE & TONE</div>
+      <h2>보이스 & 톤</h2>
+      <p class="section-sub">프리미엄하지만 따뜻한 — 깨끗한 비주얼과 다정한 카피의 조화.</p>
+
+      <div class="voice-grid">
+        <div class="voice-card do">
+          <div class="label">DO ✓</div>
+          <ul>
+            <li><strong>네비/버튼/카테고리는 무조건 한글</strong></li>
+            <li>영문 eyebrow + 한글 헤딩 페어로 사용</li>
+            <li>"걱정 없이", "부담 없이" — 안심 카피</li>
+            <li>데이터/어워드/수치로 신뢰감 강조</li>
+            <li>3단 가격 구조로 VIP 가치 전달</li>
+            <li>흰 배경 + 깔끔한 정렬</li>
+          </ul>
+        </div>
+        <div class="voice-card dont">
+          <div class="label">DON'T ✗</div>
+          <ul>
+            <li><strong>네비/버튼을 단독 영문으로 표기</strong></li>
+            <li>한글 페어 없는 영문 단독 카테고리</li>
+            <li>이모지 과다 사용 (포인트로만)</li>
+            <li>유아적이거나 가벼운 표현</li>
+            <li>여러 색상의 동시 강조</li>
+            <li>모호한 가격/혜택 표시</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 Tokens -->
+    <section id="tokens">
+      <div class="section-num">07 / DESIGN TOKENS</div>
+      <h2>디자인 토큰</h2>
+      <p class="section-sub">CSS 변수로 바로 사용할 수 있는 토큰 정의.</p>
+
+      <pre><span class="comment">/* === Color === */</span>
+<span class="var">--color-bg</span>: <span class="val">#FFFFFF</span>;
+<span class="var">--color-surface</span>: <span class="val">#F7F5F2</span>;
+<span class="var">--color-text</span>: <span class="val">#1A1A1A</span>;
+<span class="var">--color-text-muted</span>: <span class="val">#888888</span>;
+<span class="var">--color-border</span>: <span class="val">#E5E5E5</span>;
+<span class="var">--color-primary</span>: <span class="val">#E87A2C</span>;
+<span class="var">--color-accent-gold</span>: <span class="val">#C9A35B</span>;
+<span class="var">--color-success</span>: <span class="val">#3DA858</span>;
+<span class="var">--color-danger</span>: <span class="val">#FF3B30</span>;
+
+<span class="comment">/* === Typography === */</span>
+<span class="var">--font-sans</span>: <span class="val">'Noto Sans KR', system-ui</span>;
+<span class="var">--font-en</span>: <span class="val">'Inter', sans-serif</span>;
+<span class="var">--text-display</span>: <span class="val">40px</span>;
+<span class="var">--text-h1</span>: <span class="val">30px</span>;
+<span class="var">--text-h2</span>: <span class="val">24px</span>;
+<span class="var">--text-h3</span>: <span class="val">18px</span>;
+<span class="var">--text-body</span>: <span class="val">15px</span>;
+<span class="var">--text-caption</span>: <span class="val">13px</span>;
+
+<span class="comment">/* === Spacing === */</span>
+<span class="var">--space-xs</span>: <span class="val">4px</span>;
+<span class="var">--space-sm</span>: <span class="val">8px</span>;
+<span class="var">--space-md</span>: <span class="val">16px</span>;
+<span class="var">--space-lg</span>: <span class="val">24px</span>;
+<span class="var">--space-xl</span>: <span class="val">40px</span>;
+<span class="var">--space-2xl</span>: <span class="val">80px</span>;
+
+<span class="comment">/* === Layout === */</span>
+<span class="var">--container-max</span>: <span class="val">1280px</span>;
+<span class="var">--container-padding</span>: <span class="val">40px</span>;
+
+<span class="comment">/* === Radius === */</span>
+<span class="var">--radius-sm</span>: <span class="val">4px</span>;
+<span class="var">--radius-md</span>: <span class="val">8px</span>;
+<span class="var">--radius-lg</span>: <span class="val">16px</span>;
+
+<span class="comment">/* === Shadow === */</span>
+<span class="var">--shadow-card</span>: <span class="val">0 2px 8px rgba(0,0,0,0.04)</span>;
+<span class="var">--shadow-hover</span>: <span class="val">0 8px 24px rgba(0,0,0,0.08)</span>;</pre>
+    </section>
+
+    <div style="text-align: center; padding: 3rem 0; color: var(--color-text-muted); font-size: 0.85rem; border-top: 1px solid var(--color-border); margin-top: 3rem;">
+      PETHROOM Design Guidebook · v1.0 · 2026
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

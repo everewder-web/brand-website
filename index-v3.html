@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>포포마켓 — 프리미엄 펫케어</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Color */
+    --color-bg: #FFFFFF;
+    --color-surface: #F7F5F2;
+    --color-surface-2: #F2F0EC;
+    --color-text: #1A1A1A;
+    --color-text-muted: #6B6B6B;
+    --color-text-soft: #4A4A4A;
+    --color-border: #E5E5E5;
+    --color-primary: #E87A2C;
+    --color-accent-gold: #C9A35B;
+    --color-success: #3DA858;
+    --color-danger: #FF3B30;
+
+    /* Typography */
+    --font-sans: 'Noto Sans KR', system-ui, sans-serif;
+    --font-en: 'Inter', 'Helvetica Neue', sans-serif;
+
+    /* Layout */
+    --container-max: 1280px;
+    --container-padding: 40px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; }
+
+  .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+  }
+
+  /* Skip to main (a11y) */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 999;
+    background: var(--color-text);
+    color: white;
+    padding: 0.7rem 1.2rem;
+    text-decoration: none;
+  }
+  .skip-link:focus { left: 1rem; top: 1rem; }
+
+  /* ===== Eyebrow ===== */
+  .eyebrow {
+    font-family: var(--font-en);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    color: var(--color-text-muted);
+  }
+  .eyebrow.primary { color: var(--color-primary); }
+  .eyebrow.gold { color: var(--color-accent-gold); }
+
+  /* Section header — 영문 eyebrow + 한글 헤딩 페어 */
+  .sec-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .sec-header h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.6rem;
+  }
+  .sec-header p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  section { padding: 80px 0; }
+
+  /* ===== Buttons (한글 라벨) ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.95rem 1.8rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    transition: opacity 0.15s, transform 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  .btn-primary { background: var(--color-text); color: white; }
+  .btn-primary:hover { background: #333; }
+  .btn-secondary { background: white; color: var(--color-text); border: 1px solid var(--color-text); }
+  .btn-secondary:hover { background: var(--color-text); color: white; }
+  .btn-accent { background: var(--color-primary); color: white; }
+  .btn-accent:hover { background: #d96f25; }
+  .btn-arrow::after { content: '→'; font-family: var(--font-en); margin-left: 0.2rem; }
+
+  /* ===== Badges (한글) ===== */
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.02em;
+  }
+  .badge-best { background: var(--color-primary); }
+  .badge-new { background: var(--color-success); }
+  .badge-discount { background: var(--color-danger); }
+  .badge-vip { background: var(--color-accent-gold); }
+
+  /* ===== Header ===== */
+  header {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav { position: relative; }
+  .nav {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 1.1rem var(--container-padding);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 2rem;
+  }
+  .logo-block {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .logo-en {
+    font-family: var(--font-en);
+    font-weight: 900;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+  }
+  .logo-kr {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+    letter-spacing: 0.05em;
+  }
+  /* 한글 네비게이션 */
+  .nav-menu {
+    display: flex;
+    gap: 2.4rem;
+    list-style: none;
+    justify-content: center;
+  }
+  .nav-menu a {
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: color 0.15s;
+    padding: 0.4rem 0;
+    position: relative;
+  }
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -2px;
+    height: 2px;
+    background: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.2s;
+  }
+  .nav-menu a:hover { color: var(--color-primary); }
+  .nav-menu a:hover::after { transform: scaleX(1); }
+  .nav-icons {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+  }
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+  }
+  .menu-toggle:hover { background: var(--color-surface); }
+  .menu-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  .icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .icon-btn:hover { background: var(--color-surface); }
+  .icon-btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  /* 한글 툴팁 */
+  .icon-btn[data-label]::before {
+    content: attr(data-label);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--color-text);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .icon-btn:hover[data-label]::before { opacity: 1; }
+
+  .cart-count {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    font-family: var(--font-en);
+  }
+
+  /* ===== Hero ===== */
+  .hero { padding: 100px 0; }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-text h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.4rem;
+  }
+  .hero-text p {
+    font-size: 1.05rem;
+    color: var(--color-text-soft);
+    margin-bottom: 2.2rem;
+    line-height: 1.7;
+  }
+  .hero-cta { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .hero-visual {
+    aspect-ratio: 1;
+    background: var(--color-surface);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-visual .emoji {
+    font-size: 12rem;
+    filter: grayscale(0.1);
+  }
+  .hero-visual .corner-label {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+  }
+  .hero-visual .bottom-label {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+  }
+
+  /* ===== Brand Mission ===== */
+  .mission { background: var(--color-surface); }
+  .mission-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .mission .en-headline {
+    font-family: var(--font-en);
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
+  }
+  .mission h2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .mission p {
+    font-size: 1rem;
+    color: var(--color-text-soft);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .stat .num {
+    font-family: var(--font-en);
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--color-text);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .stat .label {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ===== VIP Membership ===== */
+  .vip-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .vip-text h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1.25;
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+  .vip-text h2 .accent { color: var(--color-primary); }
+  .vip-text > p {
+    color: var(--color-text-soft);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+  }
+  .benefit-list { list-style: none; margin-bottom: 2rem; }
+  .benefit-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.95rem;
+  }
+  .benefit-list li::before {
+    content: '✓';
+    color: var(--color-primary);
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .vip-visual {
+    background: var(--color-text);
+    color: white;
+    padding: 3rem 2.5rem;
+    border-radius: 8px;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .vip-visual .vip-label {
+    font-family: var(--font-en);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--color-accent-gold);
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+  .vip-visual .vip-headline-en {
+    font-family: var(--font-en);
+    font-size: 2.2rem;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
+  }
+  .vip-visual .vip-headline-en span { color: var(--color-accent-gold); }
+  .vip-visual .vip-headline-kr {
+    font-size: 1rem;
+    opacity: 0.85;
+    line-height: 1.5;
+  }
+  .vip-visual .vip-price-block {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 1.5rem;
+  }
+  .vip-visual .discount {
+    font-family: var(--font-en);
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--color-accent-gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .vip-visual .desc { font-size: 0.9rem; opacity: 0.85; }
+
+  /* ===== Product Grid ===== */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .product-card {
+    background: white;
+    transition: transform 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card:hover { transform: translateY(-4px); }
+  .product-thumb {
+    aspect-ratio: 1;
+    background: white;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-border);
+  }
+  .product-thumb .badge {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+  }
+  .product-cat {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    display: inline-block;
+    padding-left: 0.55rem;
+    border-left: 2px solid var(--color-primary);
+    line-height: 1;
+  }
+  .product-name {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+  .product-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.9rem;
+    flex-grow: 1;
+  }
+  .price-list { line-height: 1.4; margin-bottom: 0.9rem; }
+  .price-original {
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+    font-size: 0.85rem;
+  }
+  .price-sale {
+    color: var(--color-text);
+    font-weight: 900;
+    font-size: 1.15rem;
+    margin-top: 0.15rem;
+  }
+  .price-sale .discount-pct {
+    color: var(--color-danger);
+    font-family: var(--font-en);
+    margin-right: 0.4rem;
+  }
+  .price-vip {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.88rem;
+    margin-top: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .price-vip::before {
+    content: '멤버십';
+    background: var(--color-accent-gold);
+    color: white;
+    padding: 0.12rem 0.45rem;
+    font-size: 0.68rem;
+    border-radius: 2px;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .add-to-cart {
+    background: white;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    padding: 0.7rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    width: 100%;
+  }
+  .add-to-cart:hover {
+    background: var(--color-text);
+    color: white;
+    border-color: var(--color-text);
+  }
+  .add-to-cart:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--color-text);
+    color: #C8C8C8;
+    padding: 4rem 0 1.5rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand .logo-en {
+    color: white;
+    margin-bottom: 0.4rem;
+  }
+  .footer-brand .logo-kr {
+    color: #999;
+    margin-bottom: 1.2rem;
+  }
+  .footer-brand p {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: #999;
+    margin-bottom: 1.5rem;
+  }
+  .sns {
+    display: flex;
+    gap: 0.6rem;
+  }
+  .sns a {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #444;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .sns a:hover, .sns a:focus-visible {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+    outline: none;
+  }
+  /* 푸터 컬럼 헤더 — 한글 */
+  .footer-col h4 {
+    font-size: 0.95rem;
+    color: white;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li {
+    font-size: 0.9rem;
+    margin-bottom: 0.7rem;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .footer-col li:hover { color: white; }
+  .footer-bottom {
+    border-top: 1px solid #333;
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #777;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px) {
+    :root { --container-padding: 20px; }
+    section { padding: 60px 0; }
+    .nav { grid-template-columns: 1fr auto; gap: 1rem; }
+    .menu-toggle { display: inline-flex; }
+    /* 모바일 슬라이드 메뉴 — 헤더 바로 아래 부착 */
+    .nav-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+      border-bottom: 1px solid var(--color-border);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+    .nav-menu.open { max-height: 320px; }
+    .nav-menu li { width: 100%; }
+    .nav-menu a {
+      display: block;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .nav-menu li:last-child a { border-bottom: none; }
+    .nav-menu a::after { display: none; }
+    .hero { padding: 60px 0; }
+    .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-text h1 { font-size: 2.2rem; }
+    .hero-visual .emoji { font-size: 7rem; }
+    .mission .en-headline { font-size: 1.8rem; }
+    .mission h2 { font-size: 1.4rem; }
+    .stats-row { grid-template-columns: 1fr; gap: 1.2rem; text-align: center; }
+    .vip-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .vip-text h2 { font-size: 1.6rem; }
+    .vip-visual .vip-headline-en { font-size: 1.7rem; }
+    .vip-visual .discount { font-size: 2.8rem; }
+    .products { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+    .product-thumb { font-size: 3.5rem; }
+    .sec-header h2 { font-size: 1.6rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">본문으로 바로가기</a>
+
+<!-- ===== Header ===== -->
+<header>
+  <nav class="nav" aria-label="주 메뉴">
+    <a href="#" class="logo-block" aria-label="포포마켓 홈">
+      <span class="logo-en">POPOMARKET</span>
+      <span class="logo-kr">포포마켓 · 프리미엄 펫케어</span>
+    </a>
+    <!-- 한글 네비게이션 (사용성 우선) -->
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#best">쇼핑</a></li>
+      <li><a href="#vip">멤버십</a></li>
+      <li><a href="#mission">브랜드</a></li>
+      <li><a href="#new">신상품</a></li>
+    </ul>
+    <div class="nav-icons">
+      <button class="icon-btn" data-label="검색" aria-label="검색">🔍</button>
+      <button class="icon-btn" data-label="마이페이지" aria-label="마이페이지">👤</button>
+      <button class="icon-btn" data-label="장바구니" aria-label="장바구니 (2개)">
+        🛒
+        <span class="cart-count" aria-hidden="true">2</span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navMenu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="eyebrow primary">PREMIUM PET CARE</div>
+        <h1>우리 아이를 위한<br>진심을 담은 선택</h1>
+        <p>까다롭게 고른 프리미엄 사료부터 매일 쓰는 생활용품까지,<br>수의사 100인이 검수한 제품만 만나보세요.</p>
+        <div class="hero-cta">
+          <a href="#best" class="btn btn-primary btn-arrow">쇼핑 시작하기</a>
+          <a href="#mission" class="btn btn-secondary">브랜드 이야기</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <span class="corner-label">VOL. 01</span>
+        <span class="emoji">🐕</span>
+        <span class="bottom-label">SPRING 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Brand Mission ===== -->
+<section class="mission" id="mission">
+  <div class="container">
+    <div class="mission-inner">
+      <div class="eyebrow">OUR PHILOSOPHY</div>
+      <div class="en-headline">THE REASON WE EXIST</div>
+      <h2>반려동물도, 가족이니까요</h2>
+      <p>포포마켓은 수의사 100인과 반려인 커뮤니티의 검수를 거친 제품만 입점시킵니다.<br>
+      좋은 재료, 안전한 디자인, 합리적인 가격 — 우리 아이에게 줄 수 있는<br>가장 진심 어린 선물을 약속해요.</p>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="num">100<span style="font-size:1.4rem;">+</span></div>
+          <div class="label">수의사 검수 위원</div>
+        </div>
+        <div class="stat">
+          <div class="num">98<span style="font-size:1.4rem;">%</span></div>
+          <div class="label">멤버십 재구매율</div>
+        </div>
+        <div class="stat">
+          <div class="num">2024</div>
+          <div class="label">올해의 펫 브랜드 어워드</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Membership ===== -->
+<section id="vip">
+  <div class="container">
+    <div class="vip-inner">
+      <div class="vip-text">
+        <div class="eyebrow gold">POPO MEMBERSHIP</div>
+        <h2>정기배송으로<br><span class="accent">35% 더 저렴하게</span></h2>
+        <p>한 달에 한 번, 우리 아이가 좋아하는 것들을 자동으로.<br>멤버십 전용 혜택을 누리세요.</p>
+        <ul class="benefit-list">
+          <li>전 상품 35% 추가 할인 + 무료배송</li>
+          <li>1:1 반려동물 전담 상담사</li>
+          <li>제휴 동물병원 무료 건강검진권</li>
+          <li>멤버십 한정 신상품 우선 구매</li>
+        </ul>
+        <a href="#" class="btn btn-accent btn-arrow">멤버십 가입하기</a>
+      </div>
+      <div class="vip-visual" aria-hidden="true">
+        <div>
+          <div class="vip-label">POPO MEMBERSHIP</div>
+          <div class="vip-headline-en">EXCLUSIVE<br><span>BENEFITS</span></div>
+          <div class="vip-headline-kr">멤버십 전용 혜택</div>
+        </div>
+        <div class="vip-price-block">
+          <div class="discount">-35%</div>
+          <div class="desc">매월 자동 배송 · 언제든 해지 가능</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Best Seller ===== -->
+<section id="best" style="background: var(--color-surface);">
+  <div class="container">
+    <div class="sec-header">
+      <div class="eyebrow primary">BEST SELLER</div>
+      <h2>이번 주 인기 상품</h2>
+      <p>고객님이 가장 많이 선택한 베스트셀러</p>
+    </div>
+    <div class="products">
+      <article class="product-card">
+        <div class="product-thumb">
+          <span class="badge badge-best">인기</span>
+          🍖
+        </div>
+        <div class="product-cat">강아지 · 사료</div>
+        <h3 class="product-name">프리미엄 연어 사료 2kg</h3>
+        <p class="product-desc">자연 방목 연어 함유 80%</p>
+        <div class="price-list">
+          <div class="price-original">38,000원</div>
+          <div class="price-sale"><span class="discount-pct">22%</span>29,800원</div>
+          <div class="price-vip">19,800원</div>
+        </div>
+        <button class="add-to-cart" aria-label="프리미엄 연어 사료 2kg 장바구니에 담기">장바구니에 담기</button>
+      </article>
+      <article class="product-card">
+        <div class="product-thumb">
+          <span class="badge badge-best">인기</span>
+          🦴
+        </div>
+        <div class="product-cat">강아지 · 덴탈케어</div>
+        <h3 class="product-name">치석 케어 덴탈껌 30개입</h3>
+        <p class="product-desc">매일 5분, 치아 건강 관리</p>
+        <div class="price-list">
+          <div class="price-sale">18,900원</div>
+          <div class="price-vip">12,300원</div>
+        </div>
+        <button class="add-to-cart" aria-label="치석 케어 덴탈껌 장바구니에 담기">장바구니에 담기</button>
+      </article>
+      <article class="product-card">
+        <div class="product-thumb">
+          <span class="badge badge-discount">-30%</span>
+          🛁
+        </div>
+        <div class="product-cat">케어 · 목욕</div>
+        <h3 class="product-name">저자극 천연 샴푸 500ml</h3>
+        <p class="product-desc">민감한 피부를 위한 약산성</p>
+        <div class="price-list">
+          <div class="price-original">22,000원</div>
+          <div class="price-sale"><span class="discount-pct">30%</span>15,400원</div>
+          <div class="price-vip">10,200원</div>
+        </div>
+        <button class="add-to-cart" aria-label="저자극 천연 샴푸 장바구니에 담기">장바구니에 담기</button>
+      </article>
+      <article class="product-card">
+        <div class="product-thumb">
+          <span class="badge badge-best">인기</span>
+          🐱
+        </div>
+        <div class="product-cat">고양이 · 사료</div>
+        <h3 class="product-name">고양이 헬시밸런스 1.5kg</h3>
+        <p class="product-desc">전 연령 통합 영양 케어</p>
+        <div class="price-list">
+          <div class="price-original">32,000원</div>
+          <div class="price-sale"><span class="discount-pct">18%</span>26,200원</div>
+          <div class="price-vip">17,100원</div>
+        </div>
+        <button class="add-to-cart" aria-label="고양이 헬시밸런스 장바구니에 담기">장바구니에 담기</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== New Arrival ===== -->
+<section id="new">
+  <div class="container">
+    <div class="sec-header">
+      <div class="eyebrow primary">NEW ARRIVAL</div>
+      <h2>이번 주 신상품</h2>
+      <p>방금 입고된 따끈한 신상</p>
+    </div>
+    <div class="products">
+      <article class="product-card">
+        <div class="product-thumb">
+          <span class="badge badge-new">신상</span>
+          🧸
+        </div>
+        <div class="product-cat">강아지 · 장난감</div>
+        <h3 class="product-name">노즈워크 삑삑이 인형</h3>
+        <p class="product-desc">두뇌 자극 + 스트레스 완화</p>
+        <div class="price-list">
+          <div class="price-sale">12,500원</div>
+          <div class="price-vip">8,100원</div>
+        </div>
+        <button class="add-to-cart" aria-label="노즈워크 삑삑이 인형 장바구니에 담기">장바구니에 담기</button>
+      </article>
+      <article class="product-card">
+        <div class="product-thumb">
+          <span class="badge badge-new">신상</span>
+          🏠
+        </div>
+        <div class="product-cat">라이프 · 방석</div>
+        <h3 class="product-name">메모리폼 도넛 방석 M</h3>
+        <p class="product-desc">관절 보호 · 세탁 가능</p>
+        <div class="price-list">
+          <div class="price-original">54,000원</div>
+          <div class="price-sale"><span class="discount-pct">15%</span>45,900원</div>
+          <div class="price-vip">29,800원</div>
+        </div>
+        <button class="add-to-cart" aria-label="메모리폼 도넛 방석 장바구니에 담기">장바구니에 담기</button>
+      </article>
+      <article class="product-card">
+        <div class="product-thumb">
+          <span class="badge badge-new">신상</span>
+          💊
+        </div>
+        <div class="product-cat">건강 · 영양제</div>
+        <h3 class="product-name">관절 영양제 스틱 30포</h3>
+        <p class="product-desc">노령견을 위한 글루코사민</p>
+        <div class="price-list">
+          <div class="price-sale">28,000원</div>
+          <div class="price-vip">18,200원</div>
+        </div>
+        <button class="add-to-cart" aria-label="관절 영양제 스틱 장바구니에 담기">장바구니에 담기</button>
+      </article>
+      <article class="product-card">
+        <div class="product-thumb">
+          <span class="badge badge-new">신상</span>
+          🥛
+        </div>
+        <div class="product-cat">고양이 · 간식</div>
+        <h3 class="product-name">락토프리 고양이 우유</h3>
+        <p class="product-desc">소화 안심 · 6팩 세트</p>
+        <div class="price-list">
+          <div class="price-original">15,000원</div>
+          <div class="price-sale"><span class="discount-pct">12%</span>13,200원</div>
+          <div class="price-vip">8,600원</div>
+        </div>
+        <button class="add-to-cart" aria-label="락토프리 고양이 우유 장바구니에 담기">장바구니에 담기</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-en">POPOMARKET</div>
+        <div class="logo-kr">포포마켓 · 프리미엄 펫케어</div>
+        <p>반려동물과 보호자를 위한<br>진심 어린 선택, 포포마켓.</p>
+        <div class="sns">
+          <a href="#" aria-label="인스타그램">📷</a>
+          <a href="#" aria-label="유튜브">▶</a>
+          <a href="#" aria-label="카카오톡 채널">💬</a>
+          <a href="#" aria-label="블로그">✍</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>쇼핑</h4>
+        <ul>
+          <li>강아지 용품</li>
+          <li>고양이 용품</li>
+          <li>소동물 용품</li>
+          <li>신상품 모아보기</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>고객지원</h4>
+        <ul>
+          <li>1588-0000</li>
+          <li>평일 09:00 - 18:00</li>
+          <li>1:1 문의하기</li>
+          <li>자주 묻는 질문</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>회사</h4>
+        <ul>
+          <li>회사 소개</li>
+          <li>이용약관</li>
+          <li>개인정보처리방침</li>
+          <li>제휴 문의</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 포포마켓 (POPOMARKET). 모든 권리 보유.</div>
+      <div>사업자등록번호 000-00-00000</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 모바일 햄버거 메뉴 토글
+  (function () {
+    var toggle = document.getElementById('menuToggle');
+    var menu = document.getElementById('navMenu');
+    if (!toggle || !menu) return;
+
+    function setOpen(open) {
+      menu.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+      toggle.textContent = open ? '✕' : '☰';
+    }
+
+    toggle.addEventListener('click', function () {
+      var isOpen = menu.classList.contains('open');
+      setOpen(!isOpen);
+    });
+
+    // 메뉴 항목 클릭 시 자동 닫기
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () { setOpen(false); });
+    });
+  })();
+</script>
+
+</body>
+</html>

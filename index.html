@@ -742,6 +742,79 @@
     outline-offset: 2px;
   }
 
+  /* ===== Reviews ===== */
+  .reviews { background: var(--color-bg); }
+  .reviews .sec-header { margin-bottom: 2.5rem; }
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .review-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.8rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .review-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(45, 45, 45, 0.06);
+  }
+  .review-stars {
+    color: var(--color-wheat);
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .review-body {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--color-text-soft);
+    margin-bottom: 1.2rem;
+  }
+  .review-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .review-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .review-author {
+    flex: 1;
+  }
+  .review-author .name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+  .review-author .pet {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.3;
+  }
+  .review-product {
+    font-size: 0.78rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    background: rgba(107, 122, 58, 0.08);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
   /* ===== Footer ===== */
   footer {
     background: var(--color-text);
@@ -856,6 +929,8 @@
     .products { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
     .product-thumb { font-size: 3.5rem; }
     .sec-header h2 { font-size: 1.6rem; }
+    .review-grid { grid-template-columns: 1fr; }
+    .review-card { padding: 1.4rem; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
     .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
   }
@@ -1105,6 +1180,7 @@
       <li><a href="#vip">멤버십</a></li>
       <li><a href="#mission">브랜드</a></li>
       <li><a href="#new">신상품</a></li>
+      <li><a href="#reviews">후기</a></li>
     </ul>
     <div class="nav-icons">
       <button class="icon-btn" data-label="검색" aria-label="검색">🔍</button>
@@ -1419,6 +1495,67 @@
             <div class="price-vip">17,640원</div>
           </div>
           <button class="add-to-cart" aria-label="시니어 베이직 트릿 장바구니에 담기">장바구니에 담기</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Reviews ===== -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="sec-header">
+      <div class="eyebrow wheat">VIP REVIEWS</div>
+      <h2>보호자님들의 실제 후기</h2>
+      <p>한입을 선택한 반려동물 가족들의 이야기</p>
+    </div>
+    <div class="review-grid">
+      <article class="review-card">
+        <div class="review-stars" aria-label="5점 만점에 5점">★★★★★</div>
+        <p class="review-body">원래 영양제는 먹이는 게 전쟁이었는데, 한입 트릿은 스스로 손을 내밀어요. 면역 트릿 3주째인데 코 박는 횟수가 확실히 줄었어요.</p>
+        <div class="review-meta">
+          <div class="review-avatar" aria-hidden="true">🐕</div>
+          <div class="review-author">
+            <div class="name">김민지 님</div>
+            <div class="pet">골든리트리버 · 4살 · 뚜비</div>
+          </div>
+          <span class="review-product">데일리 이뮨 트릿</span>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-stars" aria-label="5점 만점에 5점">★★★★★</div>
+        <p class="review-body">관절이 안 좋아서 계단을 못 오르던 우리 애가, 조인트 트릿 한 달 후부터 가벼운 계단은 혼자 오르내리기 시작했어요. 정말 감사합니다.</p>
+        <div class="review-meta">
+          <div class="review-avatar" aria-hidden="true">🐩</div>
+          <div class="review-author">
+            <div class="name">이준호 님</div>
+            <div class="pet">푸들 · 9살 · 몽실이</div>
+          </div>
+          <span class="review-product">조인트 케어 트릿</span>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-stars" aria-label="5점 만점에 5점">★★★★★</div>
+        <p class="review-body">털이 윤기가 생기고 가려움도 줄었어요. 특히 좋은 건 성분이 깔끔해서 알러기 걱정 없이 매일 줄 수 있다는 점이에요. 이제 단골이에요.</p>
+        <div class="review-meta">
+          <div class="review-avatar" aria-hidden="true">🐕</div>
+          <div class="review-author">
+            <div class="name">박서연 님</div>
+            <div class="pet">비숑프리제 · 3살 · 두부</div>
+          </div>
+          <span class="review-product">코트 글로우 트릿</span>
+        </div>
+      </article>
+      <article class="review-card">
+        <div class="review-stars" aria-label="5점 만점에 4점">★★★★☆</div>
+        <p class="review-body">덴탈 트릿 주고 나서 치석이 눈에 띄게 줄었어요. 다만 좀 더 큰 사이즈도 나오면 10kg 이상 강아지들도 더 오래 씹을 수 있을 것 같아요!</p>
+        <div class="review-meta">
+          <div class="review-avatar" aria-hidden="true">🐕</div>
+          <div class="review-author">
+            <div class="name">최도윤 님</div>
+            <div class="pet">포메라니안 · 5살 · 초코</div>
+          </div>
+          <span class="review-product">덴탈 클린 트릿</span>
         </div>
       </article>
     </div>

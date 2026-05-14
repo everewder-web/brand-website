@@ -361,6 +361,12 @@
     .hero-text h1 { animation: none; opacity: 1; transform: none; }
     .text-highlight { animation: none; background-size: 100% 100%; }
     .hero-dots-hover { display: none; }
+    .orbital-center,
+    .orbital-center::before,
+    .orbital-center::after,
+    .orbital-node.is-related .dot,
+    .orbital-node.is-pulsing .glow { animation: none !important; }
+    .orbital-node { transition: none !important; }
   }
 
   .hero-text h1 {
@@ -513,35 +519,285 @@
     color: var(--color-text-muted);
   }
 
-  /* ===== Functional Categories ===== */
+  /* ===== Functional Categories — Radial Orbital (vanilla 포팅) ===== */
   .functions {
-    background: var(--color-bg);
+    background: var(--color-text);
+    color: #fff;
+    padding: 100px 0;
+    overflow: hidden;
   }
-  .function-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
+  .functions .sec-header h2 { color: #fff; }
+  .functions .sec-header p { color: rgba(255,255,255,0.65); }
+  .functions .eyebrow.primary { color: var(--color-primary-soft); }
+
+  .orbital-stage {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+    user-select: none;
   }
-  .function-item {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1.4rem 1rem;
-    text-align: center;
+
+  .orbital-center {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-soft) 55%, var(--color-wheat) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    animation: orbital-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  .orbital-center::before,
+  .orbital-center::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.25);
+    animation: orbital-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .orbital-center::after {
+    inset: -20px;
+    border-color: rgba(255,255,255,0.12);
+    animation-delay: 0.5s;
+  }
+  .orbital-center .core {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+  }
+
+  .orbital-ring {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .orbital-nodes {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .orbital-node {
+    position: absolute;
     cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font-family: inherit;
+    transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .function-item:hover {
-    transform: translateY(-3px);
-    border-color: var(--color-primary);
+  .orbital-node:focus-visible {
+    outline: 2px solid var(--color-primary-soft);
+    outline-offset: 10px;
+    border-radius: 50%;
   }
-  .function-item .icon {
-    font-size: 2rem;
-    margin-bottom: 0.6rem;
+
+  .orbital-node .glow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 92px;
+    height: 92px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,181,112,0.28) 0%, rgba(168,181,112,0) 70%);
+    pointer-events: none;
   }
-  .function-item .name {
-    font-size: 0.9rem;
+  .orbital-node.is-pulsing .glow {
+    animation: orbital-pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .orbital-node .dot {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-text);
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+    font-size: 1.7rem;
+    line-height: 1;
+    transition: transform 0.3s, background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .orbital-node.is-related .dot {
+    background: var(--color-primary-soft);
+    color: var(--color-text);
+    border-color: #fff;
+    animation: orbital-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  .orbital-node.is-active .dot {
+    background: #fff;
+    color: var(--color-text);
+    border-color: #fff;
+    box-shadow: 0 0 18px rgba(255,255,255,0.45);
+    transform: scale(1.45);
+  }
+
+  .orbital-node .label {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 14px);
+    white-space: nowrap;
+    font-size: 0.72rem;
     font-weight: 700;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.72);
+    transition: color 0.3s, transform 0.3s;
+    pointer-events: none;
+  }
+  .orbital-node.is-active .label {
+    color: #fff;
+    transform: translate(-50%, 26px) scale(1.15);
+  }
+
+  .orbital-card {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 60px);
+    width: 260px;
+    background: rgba(20,20,20,0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.28);
+    border-radius: 10px;
+    padding: 1rem 1.1rem 1.1rem;
+    box-shadow: 0 14px 44px rgba(0,0,0,0.45);
+    color: #fff;
+    text-align: left;
+    z-index: 240;
+  }
+  .orbital-card::before {
+    content: '';
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 14px;
+    background: rgba(255,255,255,0.45);
+  }
+  .orbital-card .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.55rem;
+    gap: 0.6rem;
+  }
+  .orbital-card .card-tag {
+    font-family: var(--font-en);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    background: var(--color-primary-soft);
+    color: var(--color-text);
+  }
+  .orbital-card .card-sub {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.55);
+    text-align: right;
+  }
+  .orbital-card .card-title {
+    font-size: 0.98rem;
+    font-weight: 800;
+    margin-bottom: 0.45rem;
+  }
+  .orbital-card .card-desc {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.55;
+    margin-bottom: 0.85rem;
+  }
+  .orbital-card .card-energy {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 0.7rem;
+    margin-bottom: 0.85rem;
+  }
+  .orbital-card .card-energy-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 0.4rem;
+  }
+  .orbital-card .card-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .orbital-card .card-bar > span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(to right, var(--color-primary), var(--color-primary-soft));
+    border-radius: 999px;
+  }
+  .orbital-card .card-related {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 0.7rem;
+  }
+  .orbital-card .card-related h4 {
+    font-family: var(--font-en);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 0.5rem;
+  }
+  .orbital-card .card-related .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .orbital-card .card-related .chip {
+    font-size: 0.72rem;
+    padding: 0.28rem 0.6rem;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px;
+    background: transparent;
+    color: rgba(255,255,255,0.82);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    font-family: inherit;
+  }
+  .orbital-card .card-related .chip:hover,
+  .orbital-card .card-related .chip:focus-visible {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.4);
+    color: #fff;
+    outline: none;
+  }
+
+  @keyframes orbital-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.55; }
+  }
+  @keyframes orbital-ping {
+    0%        { transform: scale(1);   opacity: 0.7; }
+    75%, 100% { transform: scale(1.9); opacity: 0;   }
   }
 
   /* ===== Membership ===== */
@@ -921,7 +1177,12 @@
     .mission h2 { font-size: 1.5rem; }
     .gap-diagram { grid-template-columns: 1fr; }
     .stats-row { grid-template-columns: 1fr; gap: 1.2rem; text-align: center; }
-    .function-grid { grid-template-columns: repeat(3, 1fr); }
+    .functions { padding: 70px 0; }
+    .orbital-stage { height: 500px; }
+    .orbital-ring { width: 280px; height: 280px; }
+    .orbital-card { width: 230px; }
+    .orbital-node .dot { width: 52px; height: 52px; font-size: 1.45rem; }
+    .orbital-node .glow { width: 78px; height: 78px; }
     .vip-inner { grid-template-columns: 1fr; gap: 2rem; }
     .vip-text h2 { font-size: 1.6rem; }
     .vip-visual .vip-headline-en { font-size: 1.7rem; }
@@ -1282,31 +1543,12 @@
       <h2>기능별로 골라주세요</h2>
       <p>우리 아이가 지금 가장 필요한 케어를 찾아보세요</p>
     </div>
-    <div class="function-grid">
-      <a href="#" class="function-item">
-        <div class="icon">🛡️</div>
-        <div class="name">면역 케어</div>
-      </a>
-      <a href="#" class="function-item">
-        <div class="icon">🦴</div>
-        <div class="name">관절 케어</div>
-      </a>
-      <a href="#" class="function-item">
-        <div class="icon">✨</div>
-        <div class="name">피부·털 케어</div>
-      </a>
-      <a href="#" class="function-item">
-        <div class="icon">🦷</div>
-        <div class="name">덴탈 케어</div>
-      </a>
-      <a href="#" class="function-item">
-        <div class="icon">🌿</div>
-        <div class="name">소화 케어</div>
-      </a>
-      <a href="#" class="function-item">
-        <div class="icon">⚖️</div>
-        <div class="name">체중 케어</div>
-      </a>
+    <div class="orbital-stage" id="orbitalStage" role="group" aria-label="기능별 케어 카테고리 (궤도형 내비게이션)">
+      <div class="orbital-ring" aria-hidden="true"></div>
+      <div class="orbital-center" aria-hidden="true">
+        <div class="core"></div>
+      </div>
+      <div class="orbital-nodes" id="orbitalNodes"></div>
     </div>
   </div>
 </section>
@@ -1839,6 +2081,234 @@
         }
       });
     });
+  })();
+
+  // 기능별 카테고리 — Radial Orbital Timeline 효과 (React 컴포넌트 vanilla 포팅)
+  (function () {
+    var stage = document.getElementById('orbitalStage');
+    var container = document.getElementById('orbitalNodes');
+    if (!stage || !container) return;
+    var ring = stage.querySelector('.orbital-ring');
+
+    // 카테고리 데이터 — 기존 6개 케어 항목 + 핵심 성분/연결 관계
+    var data = [
+      {
+        id: 1, title: '면역 케어', icon: '🛡️', tag: 'IMMUNE',
+        sub: '베타글루칸 · 홍삼 추출물',
+        desc: '계절 변화에도 흔들리지 않는 일상 면역 균형을 위한 한입.',
+        energy: 100, relatedIds: [3, 5]
+      },
+      {
+        id: 2, title: '관절 케어', icon: '🦴', tag: 'JOINT',
+        sub: '글루코사민 · MSM',
+        desc: '활동량 많은 아이의 관절 건강과 유연성을 위한 매일의 케어.',
+        energy: 85, relatedIds: [6]
+      },
+      {
+        id: 3, title: '피부·털 케어', icon: '✨', tag: 'SKIN & COAT',
+        sub: '오메가3 · 아연',
+        desc: '윤기 있는 피모와 건강한 피부 장벽을 위한 영양 케어.',
+        energy: 90, relatedIds: [1, 5]
+      },
+      {
+        id: 4, title: '덴탈 케어', icon: '🦷', tag: 'DENTAL',
+        sub: '효소 · 식이섬유',
+        desc: '씹는 즐거움 속에 자연스러운 치아 케어를 더한 한입.',
+        energy: 75, relatedIds: []
+      },
+      {
+        id: 5, title: '소화 케어', icon: '🌿', tag: 'DIGESTIVE',
+        sub: '프로바이오틱스 · 차전자피',
+        desc: '예민한 장과 매일의 컨디션을 위한 부드러운 소화 케어.',
+        energy: 80, relatedIds: [1, 3]
+      },
+      {
+        id: 6, title: '체중 케어', icon: '⚖️', tag: 'WEIGHT',
+        sub: '저칼로리 · L-카르니틴',
+        desc: '간식의 즐거움은 그대로, 칼로리 부담은 가볍게 덜어낸 한입.',
+        energy: 70, relatedIds: [2]
+      }
+    ];
+
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var rotation = 0;
+    var autoRotate = true;
+    var activeId = null;
+    var nodes = []; // { id, el, data }
+    var rotationTimer = null;
+
+    function getRelated(id) {
+      var item = data.find(function (d) { return d.id === id; });
+      return item ? item.relatedIds : [];
+    }
+
+    function getRadius() {
+      // ring 요소의 실제 크기에서 반지름 계산 → 반응형 자동 대응
+      return ring.getBoundingClientRect().width / 2;
+    }
+
+    function positionNodes() {
+      var total = data.length;
+      var radius = getRadius();
+      nodes.forEach(function (n, idx) {
+        var angle = ((idx / total) * 360 + rotation) % 360;
+        var radian = angle * Math.PI / 180;
+        var x = radius * Math.cos(radian);
+        var y = radius * Math.sin(radian);
+        var z = Math.round(100 + 50 * Math.cos(radian));
+        var opacity = Math.max(0.45, Math.min(1, 0.45 + 0.55 * ((1 + Math.sin(radian)) / 2)));
+        var isActive = n.id === activeId;
+        n.el.style.transform = 'translate(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px)';
+        n.el.style.zIndex = isActive ? 240 : z;
+        n.el.style.opacity = isActive ? 1 : opacity.toFixed(3);
+      });
+    }
+
+    function clearActiveUI() {
+      nodes.forEach(function (n) {
+        n.el.classList.remove('is-active', 'is-related', 'is-pulsing');
+        n.el.setAttribute('aria-expanded', 'false');
+        var card = n.el.querySelector('.orbital-card');
+        if (card) card.remove();
+      });
+    }
+
+    function buildCard(item) {
+      var card = document.createElement('div');
+      card.className = 'orbital-card';
+      card.setAttribute('role', 'dialog');
+      card.setAttribute('aria-label', item.title + ' 상세');
+      card.addEventListener('click', function (e) { e.stopPropagation(); });
+
+      var related = item.relatedIds.map(function (rid) {
+        var ri = data.find(function (d) { return d.id === rid; });
+        if (!ri) return '';
+        return '<button type="button" class="chip" data-rel="' + rid + '">' + ri.title + ' →</button>';
+      }).join('');
+
+      card.innerHTML = ''
+        + '<div class="card-meta">'
+        +   '<span class="card-tag">' + item.tag + '</span>'
+        +   '<span class="card-sub">' + item.sub + '</span>'
+        + '</div>'
+        + '<div class="card-title">' + item.title + '</div>'
+        + '<p class="card-desc">' + item.desc + '</p>'
+        + '<div class="card-energy">'
+        +   '<div class="card-energy-row"><span>케어 강도</span><span>' + item.energy + '%</span></div>'
+        +   '<div class="card-bar"><span style="width:' + item.energy + '%"></span></div>'
+        + '</div>'
+        + (related ? '<div class="card-related"><h4>연결된 케어</h4><div class="chips">' + related + '</div></div>' : '');
+
+      card.querySelectorAll('.chip').forEach(function (chip) {
+        chip.addEventListener('click', function (e) {
+          e.stopPropagation();
+          toggle(parseInt(chip.getAttribute('data-rel'), 10));
+        });
+      });
+      return card;
+    }
+
+    function toggle(id) {
+      var item = data.find(function (d) { return d.id === id; });
+      if (!item) return;
+
+      // 같은 노드 다시 클릭 → 닫기
+      if (activeId === id) {
+        activeId = null;
+        autoRotate = true;
+        clearActiveUI();
+        positionNodes();
+        return;
+      }
+
+      activeId = id;
+      autoRotate = false;
+      clearActiveUI();
+
+      var related = getRelated(id);
+      nodes.forEach(function (n) {
+        if (n.id === id) {
+          n.el.classList.add('is-active');
+          n.el.setAttribute('aria-expanded', 'true');
+          n.el.appendChild(buildCard(item));
+        } else if (related.indexOf(n.id) > -1) {
+          n.el.classList.add('is-related', 'is-pulsing');
+        }
+      });
+
+      // 활성 노드를 아래쪽(270°)으로 회전 → 카드가 위로 안 잘리도록
+      var idx = data.findIndex(function (d) { return d.id === id; });
+      var targetAngle = (idx / data.length) * 360;
+      rotation = (270 - targetAngle + 360) % 360;
+      positionNodes();
+    }
+
+    function render() {
+      container.innerHTML = '';
+      nodes = [];
+      data.forEach(function (item) {
+        var node = document.createElement('button');
+        node.type = 'button';
+        node.className = 'orbital-node';
+        node.setAttribute('aria-label', item.title + ' — ' + item.sub);
+        node.setAttribute('aria-expanded', 'false');
+        node.setAttribute('data-id', String(item.id));
+        node.innerHTML = ''
+          + '<span class="glow" aria-hidden="true"></span>'
+          + '<span class="dot" aria-hidden="true">' + item.icon + '</span>'
+          + '<span class="label">' + item.title + '</span>';
+        node.addEventListener('click', function (e) {
+          e.stopPropagation();
+          toggle(item.id);
+        });
+        container.appendChild(node);
+        nodes.push({ id: item.id, el: node, data: item });
+      });
+      positionNodes();
+    }
+
+    // 자동 회전 — 원본 컴포넌트와 동일하게 50ms마다 0.3° (≒ 6°/s)
+    function startAutoRotate() {
+      if (prefersReduced || rotationTimer) return;
+      rotationTimer = setInterval(function () {
+        if (!autoRotate) return;
+        rotation = (rotation + 0.3) % 360;
+        positionNodes();
+      }, 50);
+    }
+
+    // 빈 영역 클릭 → 닫기
+    stage.addEventListener('click', function (e) {
+      if (e.target === stage || e.target === ring || e.target === container) {
+        if (activeId !== null) {
+          activeId = null;
+          autoRotate = true;
+          clearActiveUI();
+          positionNodes();
+        }
+      }
+    });
+
+    // ESC → 닫기
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && activeId !== null) {
+        activeId = null;
+        autoRotate = true;
+        clearActiveUI();
+        positionNodes();
+      }
+    });
+
+    // 리사이즈 시 반지름 재계산
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+      if (resizeTimer) cancelAnimationFrame(resizeTimer);
+      resizeTimer = requestAnimationFrame(positionNodes);
+    });
+
+    // 모션 줄이기 선호 사용자: 정적 배치(부드러운 분포)만 유지하고 회전 미동작
+    render();
+    startAutoRotate();
   })();
 </script>
 
